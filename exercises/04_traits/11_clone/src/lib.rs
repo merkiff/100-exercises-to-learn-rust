@@ -1,10 +1,9 @@
-// TODO: add the necessary `Clone` implementations (and invocations)
-//  to get the code to compile.
-
+// TODO: 필요한 Clone 구현을 추가하여 코드가 컴파일될 수 있도록 하세요.
 pub fn summary(ticket: Ticket) -> (Ticket, Summary) {
-    (ticket, ticket.summary())
+    (ticket.clone(), ticket.summary())
 }
 
+#[derive(Clone)]
 pub struct Ticket {
     pub title: String,
     pub description: String,

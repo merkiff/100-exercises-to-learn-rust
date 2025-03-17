@@ -4,8 +4,7 @@ pub struct Ticket {
     status: String,
 }
 
-// TODO: based on what you learned in this section, replace `todo!()` with
-//  the correct **stack size** for the respective type.
+// TODO: `todo!()`를 올바른 **스택 크기**로 수정하세요.
 #[cfg(test)]
 mod tests {
     use super::Ticket;
@@ -13,16 +12,16 @@ mod tests {
 
     #[test]
     fn string_size() {
-        assert_eq!(size_of::<String>(), todo!());
+        assert_eq!(size_of::<String>(), 24);
     }
 
     #[test]
     fn ticket_size() {
-        // This is a tricky question!
-        // The "intuitive" answer happens to be the correct answer this time,
-        // but, in general, the memory layout of structs is a more complex topic.
-        // If you're curious, check out the "Type layout" section of The Rust Reference
-        // https://doc.rust-lang.org/reference/type-layout.html for more information.
-        assert_eq!(size_of::<Ticket>(), todo!());
+        // 꽤 까다로운 질문입니다!
+        // "직관적"인 답이 이번에는 맞겠지만,
+        // 일반적으로 구조체의 메모리 레이아웃은 더 복잡한 주제입니다.
+        // 만약 궁금하다면, Rust Reference의 "Type layout:" 섹션을 확인해보세요.
+        // https://doc.rust-lang.org/reference/type-layout.html
+        assert_eq!(size_of::<Ticket>(), 72);
     }
 }

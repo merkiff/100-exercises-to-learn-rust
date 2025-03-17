@@ -1,7 +1,29 @@
-// TODO: implement a so-called "Drop bomb": a type that panics when dropped
-//  unless a certain operation has been performed on it.
-//  You can see the expected API in the tests below.
+// TODO: Drob bomb를 구현하세요.
+// 불필요한 drop이 발생하면 패닉을 일으킵니다.
+// 요구하는 API는 테스트에서 확인할 수 있습니다.
 
+struct DropBomb {
+    defused: bool,
+}
+
+impl Drop for DropBomb {
+    fn drop(&mut self) {
+        if !self.defused {
+            panic!();
+        }
+    }
+}
+impl DropBomb {
+    pub fn new() -> Self{
+        DropBomb {
+            defused: false,
+        }
+    }
+
+    pub fn defuse(&mut self) {
+        self.defused = true;
+    }
+}
 #[cfg(test)]
 mod tests {
     use super::*;

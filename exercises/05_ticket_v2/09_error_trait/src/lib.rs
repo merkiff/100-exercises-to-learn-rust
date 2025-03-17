@@ -1,19 +1,42 @@
-// TODO: Implement `Debug`, `Display` and `Error` for the `TicketNewError` enum.
-//  When implementing `Display`, you may want to use the `write!` macro from Rust's standard library.
-//  The docs for the `std::fmt` module are a good place to start and look for examples:
+// TODO: TicketNewError 열거형에 `Debug`, `Display`, `Error` 트레이트를 구현하세요.
+// `Display`를 구현할 때, `write!` 매크로를 사용하고 싶을지도 모릅니다.
+// `std::fmt` 모듈의 문서는 좋은 예시가 될 것입니다.
 //  https://doc.rust-lang.org/std/fmt/index.html#write
 
+#[derive(Debug)]
 enum TicketNewError {
     TitleError(String),
     DescriptionError(String),
 }
 
-// TODO: `easy_ticket` should panic when the title is invalid, using the error message
-//   stored inside the relevant variant of the `TicketNewError` enum.
-//   When the description is invalid, instead, it should use a default description:
-//   "Description not provided".
+impl std::fmt::Display for TicketNewError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TicketNewError::TitleError(msg) => write!(f, "{}", msg),
+            TicketNewError::DescriptionError(msg) => write!(f, "{}", msg),
+        }
+    }
+}
+
+impl std::error::Error for TicketNewError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        None
+    }
+}
+
+
+// TODO: `easy_ticket`은 제목이 잘못되면 TicketNewError enum에 저장된 에러 메시지를 사용하여
+// panic을 일으키고, description이 잘못되면 "Description not provided"라는 기본 메시지를 사용하세요.
 fn easy_ticket(title: String, description: String, status: Status) -> Ticket {
-    todo!()
+    match Ticket::new(title.clone(), description, status.clone()) {
+        Ok(ticket) => ticket,
+        Err(err) => match err {
+            TicketNewError::TitleError(msg) => panic!("{}", msg),
+            TicketNewError::DescriptionError(_) => {
+                Ticket::new(title, "Description not provided".into(), status).unwrap()
+            }
+        },
+    }
 }
 
 #[derive(Debug, PartialEq, Clone)]

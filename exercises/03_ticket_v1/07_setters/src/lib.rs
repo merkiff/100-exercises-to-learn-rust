@@ -1,7 +1,7 @@
-// TODO: Add &mut-setters to the `Ticket` struct for each of its fields.
-//   Make sure to enforce the same validation rules you have in `Ticket::new`!
-//   Even better, extract that logic and reuse it in both places. You can use
-//   private functions or private static methods for that.
+// TODO: Ticket 구조체의 각 필드에 대여-가변 설정자(&mut-setter)를 추가하세요.
+//   `Ticket::new`와 동일한 조건을 준수하세요.
+//   동일한 로직을 추출해 재사용하면 더 좋습니다.
+//   비공개(private) 함수나 비공개 정적(static) 메서드를 사용할 수 있습니다.
 
 pub struct Ticket {
     title: String,
@@ -11,21 +11,10 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
-            panic!("Title cannot be empty");
-        }
-        if title.len() > 50 {
-            panic!("Title cannot be longer than 50 bytes");
-        }
-        if description.is_empty() {
-            panic!("Description cannot be empty");
-        }
-        if description.len() > 500 {
-            panic!("Description cannot be longer than 500 bytes");
-        }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
+        //조건 검사 로직은 필드 별로 분리
+        check_title(&title);
+        check_description(&description);
+        check_status(&status);
 
         Ticket {
             title,
@@ -44,6 +33,43 @@ impl Ticket {
 
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    //setter 생성
+    pub fn set_title(&mut self, title: String) {
+        check_title(&title);
+        self.title = title
+    }
+    pub fn set_description(&mut self, description: String) {
+        check_description(&description);
+        self.description = description
+    }
+    pub fn set_status(&mut self, status: String) {
+        check_status(&status);
+        self.status = status
+    }
+}
+
+fn check_title(title: &String) {
+    if title.is_empty() {
+        panic!("Title cannot be empty");
+    }
+    if title.len() > 50 {
+        panic!("Title cannot be longer than 50 bytes");
+    }
+}
+
+fn check_description(description: &String) {
+    if description.is_empty() {
+        panic!("Description cannot be empty");
+    }
+    if description.len() > 500 {
+        panic!("Description cannot be longer than 500 bytes");
+    }
+}
+fn check_status(status: &String) {
+    if status != "To-Do" && status != "In Progress" && status != "Done" {
+        panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
     }
 }
 

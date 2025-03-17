@@ -1,8 +1,8 @@
-// TODO: whenever `title` and `description` are returned via their accessor methods, they
-//   should be normalized—i.e. leading and trailing whitespace should be removed.
-//   There is a method in Rust's standard library that can help with this, but you won't
-//   find it in the documentation for `String`.
-//   Can you figure out where it is defined and how to use it?
+// TODO: title과 description이 접근자를 통해 반환되면, 정규화되어야(normalized) 합니다.
+// 예를 들어, 문자열 앞과 뒤의 공백은 제거되어야 합니다.
+// 러스트에는 이를 도울 수 있는 표준 라이브러리 메서드가 있지만, String의 문서에서는 찾을 수 없죠.
+// 그것이 어디에 있고 어떻게 사용하는지 찾을 수 있나요?
+
 
 pub struct Ticket {
     title: String,
@@ -12,11 +12,11 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn title(&self) -> &str {
-        todo!()
+        self.title.trim()
     }
 
     pub fn description(&self) -> &str {
-        todo!()
+        self.description.trim()
     }
 }
 
